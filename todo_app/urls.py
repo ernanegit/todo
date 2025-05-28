@@ -1,10 +1,19 @@
-﻿from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import TodoViewSet
+﻿from django.urls import path
 
-router = DefaultRouter()
-router.register(r'todos', TodoViewSet, basename='todo')
+def api_info(request):
+    from django.http import JsonResponse
+    return JsonResponse({
+        'message': 'Todo API endpoints',
+        'available_endpoints': [
+            'GET /api/ - Esta página',
+            'POST /api/auth/register/ - Registrar usuário', 
+            'POST /api/auth/login/ - Login',
+            'GET /api/todos/ - Listar todos',
+            'POST /api/todos/ - Criar todo',
+        ],
+        'status': 'API funcionando'
+    })
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('', api_info, name='api_info'),
 ]
