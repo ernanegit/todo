@@ -7,7 +7,6 @@ def health_check(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/auth/', include('todo_app.auth_urls')),
-    path('api/', include('todo_app.urls')),
     path('health/', health_check),
+    path('api/', include('todo_app.urls')),
 ]

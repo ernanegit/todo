@@ -8,7 +8,7 @@
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
@@ -17,30 +17,19 @@
 
   web:
     build: .
-    command: >
-      sh -c "
-        echo 'Aguardando PostgreSQL...' &&
-        while ! nc -z db 5432; do sleep 1; done &&
-        echo 'Executando migracoes...' &&
-        python manage.py migrate &&
-        echo 'Coletando arquivos estaticos...' &&
-        python manage.py collectstatic --noinput &&
-        echo 'Criando superusuario...' &&
-        python manage.py shell -c \"from django.contrib.auth.models import User; User.objects.filter(username='admin').exists() or User.objects.create_superuser('admin', 'admin@example.com', 'admin123')\" &&
-        echo 'Iniciando servidor...' &&
-        gunicorn todo_project.wsgi:application --bind 0.0.0.0:8000
-      "
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
     ports:
       - "8000:8000"
     environment:
       - DEBUG=True
-      - SECRET_KEY=django-dev-key
+      - SECRET_KEY=django-dev-key-simples
       - DB_NAME=todoapp
       - DB_USER=postgres
       - DB_PASSWORD=postgres
       - DB_HOST=db
+      - DB_PORT=5432
     depends_on:
       db:
         condition: service_healthy

@@ -1,10 +1,9 @@
-﻿from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import TodoViewSet
+﻿from django.urls import path
 
-router = DefaultRouter()
-router.register(r'todos', TodoViewSet, basename='todo')
+def placeholder_view(request):
+    from django.http import JsonResponse
+    return JsonResponse({'message': 'API funcionando'})
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('', placeholder_view),
 ]
