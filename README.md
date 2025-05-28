@@ -1,24 +1,14 @@
-﻿# Django Todo API
+﻿# Instalar dependências
+pip install -r requirements.txt
 
-## Como usar
+# Configurar banco PostgreSQL
+# Editar settings.py ou usar SQLite
 
-1. Execute: start.bat
-2. Aguarde 30 segundos
-3. Acesse: http://localhost:8000/api/
+# Executar migrações
+python manage.py migrate
 
-## Endpoints
+# Criar superusuário
+python manage.py createsuperuser
 
-- POST /api/auth/register/ - Registrar
-- POST /api/auth/login/ - Login  
-- GET /api/todos/ - Listar tarefas
-- POST /api/todos/ - Criar tarefa
-
-## Admin
-
-- URL: http://localhost:8000/admin/
-- Usuario: admin
-- Senha: admin123
-
-## Parar
-
-Execute: stop.bat
+# Iniciar servidor
+python manage.py runserver
